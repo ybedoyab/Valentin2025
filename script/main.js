@@ -263,11 +263,15 @@ const animationTimeline = () => {
         rotation: 90,
       },
       "+=1"
-    );
+    )
+    .to("#yesBtn, #noBtn", 0.5, {
+      display: "inline-block",
+      opacity: 1,
+    }, "+=0.5"); // Show buttons at the end of the animation
 
   // tl.seek("currentStep");
   // tl.timeScale(2);
-
+  
   // Restart Animation on click
   const replyBtn = document.getElementById("replay");
   replyBtn.addEventListener("click", () => {
@@ -303,3 +307,44 @@ const resolveFetch = () => {
 };
 
 resolveFetch().then(animationTimeline());
+// Existing code...
+
+// Add this script to main.js
+const noBtn = document.getElementById('noBtn');
+const yesBtn = document.getElementById('yesBtn');
+const yayGif = document.getElementById('yayGif');
+
+noBtn.addEventListener('click', () => {
+  const x = Math.floor(Math.random() * (window.innerWidth - 100));
+  const y = Math.floor(Math.random() * (window.innerHeight - 100));
+  noBtn.style.position = 'absolute';
+  noBtn.style.left = `${x}px`;
+  noBtn.style.top = `${y}px`;
+});
+
+yesBtn.addEventListener('click', () => {
+  const popup = document.createElement('div');
+  popup.style.position = 'fixed';
+  popup.style.top = '50%';
+  popup.style.left = '50%';
+  popup.style.transform = 'translate(-50%, -50%)';
+  popup.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+  popup.style.padding = '20px';
+  popup.style.borderRadius = '10px';
+  popup.style.zIndex = '1000';
+  popup.style.display = 'flex';
+  popup.style.justifyContent = 'center';
+  popup.style.alignItems = 'center';
+
+  const gif = document.createElement('img');
+  gif.src = yayGif.src;
+  gif.style.width = '300px';
+  gif.style.height = '300px';
+
+  popup.appendChild(gif);
+  document.body.appendChild(popup);
+
+  popup.addEventListener('click', () => {
+    document.body.removeChild(popup);
+  });
+});
